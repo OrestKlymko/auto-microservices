@@ -1,15 +1,53 @@
 services:
-  app:
-    build: .
+  app-eureka-service:
+    container_name: 'app-eureka-service'
+    build: ./eureka-service/
     ports:
-      - '8080:8080'
+      - '8081:8081'
+
+  app-advert-service:
+    container_name: 'app-advert-service'
+    build: ./advert-service/
+    ports:
+      - '8084:8084'
     depends_on:
-      - postgres
-  postgres:
+      - postgres-advert
+      - app-eureka-service
+
+  app-user-service:
+    container_name: 'app-user-service'
+    build: ./user-service/
+    depends_on:
+      - postgres-user
+      - app-eureka-service
+    ports:
+      - '8761:8761'
+
+  api-gateway:
+    container_name: "api-gateway"
+    build: ./api-gateway/
+    depends_on:
+
+      - app-advert-service
+      - app-user-service
+    ports:
+      - '8083:8083'
+  postgres-user:
     image: 'postgres:latest'
+    container_name: 'db-users'
     environment:
       - 'POSTGRES_DB=users'
       - 'POSTGRES_PASSWORD=secret'
       - 'POSTGRES_USER=myuser'
     ports:
       - '5432:5432'
+
+  postgres-advert:
+    image: 'postgres:latest'
+    container_name: 'db-adverts'
+    environment:
+      - 'POSTGRES_DB=adverts'
+      - 'POSTGRES_PASSWORD=secret'
+      - 'POSTGRES_USER=myuser'
+    ports:
+      - '5433:5432'

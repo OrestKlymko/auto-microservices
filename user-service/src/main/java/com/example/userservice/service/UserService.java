@@ -103,4 +103,5 @@ public class UserService {
 		String usernameOfUserAuthentication = authenticator.getUsernameOfUserAuthentication();
 		return userRepository.findUserModelByUsername(usernameOfUserAuthentication).get();
 	}
+
 }
