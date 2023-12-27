@@ -10,10 +10,10 @@ import com.example.userservice.dto.UserRegistration;
 import com.example.userservice.model.UserModel;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.util.ValidChecker;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class UserService {
 	private final Authenticator authenticator;
 	private final JwtToken jwtToken;
 
-	public Cookie login(UserLogin userLogin) throws ResponseExceptionModel {
+	public Cookie login(UserLogin userLogin) throws ResponseExceptionModel, JsonProcessingException {
 		boolean credentialIsOk = validateUserCredentials(userLogin);
 		if (credentialIsOk) {
 			String token = jwtToken.generateToken(userLogin);

@@ -17,17 +17,16 @@ services:
   app-user-service:
     container_name: 'app-user-service'
     build: ./user-service/
+    ports:
+      - '8086:8086'
     depends_on:
       - postgres-user
       - app-eureka-service
-    ports:
-      - '8761:8761'
 
   api-gateway:
     container_name: "api-gateway"
     build: ./api-gateway/
     depends_on:
-
       - app-advert-service
       - app-user-service
     ports:
@@ -51,3 +50,11 @@ services:
       - 'POSTGRES_USER=myuser'
     ports:
       - '5433:5432'
+
+  redis:
+    image: redis
+    container_name: 'redis'
+    depends_on:
+      - app-user-service
+    ports:
+      - '6379:6379'

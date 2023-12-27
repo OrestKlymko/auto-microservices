@@ -4,8 +4,8 @@ import com.example.userservice.dto.response.ResponseExceptionModel;
 import com.example.userservice.dto.response.ResponseModel;
 import com.example.userservice.dto.UserLogin;
 import com.example.userservice.dto.UserRegistration;
-import com.example.userservice.model.UserModel;
 import com.example.userservice.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -30,6 +30,8 @@ public class UserController {
 			return ResponseEntity.ok(new ResponseModel(HttpStatus.ACCEPTED, "Login success"));
 		} catch (ResponseExceptionModel e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
 		}
 	}
 

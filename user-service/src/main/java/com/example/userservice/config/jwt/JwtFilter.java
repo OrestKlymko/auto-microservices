@@ -2,7 +2,6 @@ package com.example.userservice.config.jwt;
 
 
 import com.example.userservice.config.security.Authenticator;
-import com.example.userservice.dto.UserLogin;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -10,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -28,7 +26,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
 		String jwtTokenFromCookies = getJwtTokenFromCookies(request.getCookies());
 		if (jwtTokenFromCookies != null) {
-			UserLogin userFromToken = jwtToken.getUserFromToken(jwtTokenFromCookies);
+			JwtUserTransfer userFromToken = jwtToken.getUserFromToken(jwtTokenFromCookies);
 			authenticator.authenticateUser(userFromToken);
 		}
 		filterChain.doFilter(request, response);

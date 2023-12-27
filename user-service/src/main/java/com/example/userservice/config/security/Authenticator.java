@@ -1,6 +1,6 @@
 package com.example.userservice.config.security;
 
-import com.example.userservice.dto.UserLogin;
+import com.example.userservice.config.jwt.JwtUserTransfer;
 import com.example.userservice.dto.response.ResponseExceptionModel;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,9 @@ public class Authenticator {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 
-	public void authenticateUser(UserLogin userLogin) throws Exception {
+	public void authenticateUser(JwtUserTransfer jwtUserTransfer) throws Exception {
 		UsernamePasswordAuthenticationToken authenticationToken =
-				new UsernamePasswordAuthenticationToken(userLogin.getEmail(), userLogin.getPassword());
+				new UsernamePasswordAuthenticationToken(jwtUserTransfer.getEmail(), jwtUserTransfer.getPassword());
 		Authentication authenticate = getAuthManager().authenticate(authenticationToken);
 		SecurityContextHolder.getContext().setAuthentication(authenticate);
 	}

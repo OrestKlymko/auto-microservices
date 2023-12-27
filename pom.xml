@@ -15,15 +15,16 @@
   <name>auto-main</name>
   <url>http://maven.apache.org</url>
   <modules>
-    <module>user-service</module>
     <module>advert-service</module>
     <module>eureka-service</module>
     <module>api-gateway</module>
+    <module>user-service</module>
   </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
 
   <build>
     <plugins>
